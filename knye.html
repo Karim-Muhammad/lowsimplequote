@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                height: 100vh;
+                width: 100vw;
+                display: grid;
+                place-content: center;
+                background-color: #55a4e7;
+                color: aliceblue;
+                text-transform: capitalize;
+            }
+            .quote {
+                padding: 20px;
+                line-height: 2;
+                text-align: center;
+            }
+            button {
+                border: none;
+                background-color: #e8a856;
+                color: black;
+                letter-spacing: 2px;
+                font-weight: 500;
+                padding: 15px;
+                display: block;
+                margin: auto;
+                transition: 0.5s;
+                cursor: pointer;
+                text-transform: capitalize;
+                font-weight: 600;
+            }
+            button:hover {
+                transform: scale(1.05);
+                background-color: #e2e241;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="quote"></div>
+            <button class="btn-quote">change quote</button>
+        </div>
+        <script>
+            fetchQuote();
+            function fetchQuote() {
+                fetch("https://api.kanye.rest")
+                    .then(
+                        (result) => {
+                            return result.json();
+                        },
+                        (result) => {
+                            throw new Error(
+                                "We cannot find your page: " + result
+                            );
+                        }
+                    )
+                    .then((returnValue) => {
+                        document.querySelector("div.quote").innerHTML =
+                            returnValue.quote;
+                    });
+            }
+
+            document.querySelector("button").addEventListener("click", () => {
+                fetchQuote();
+            });
+        </script>
+    </body>
+</html>
